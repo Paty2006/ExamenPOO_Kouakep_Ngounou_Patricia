@@ -75,13 +75,17 @@ namespace PratiqueExamen
 
         public void Pratiquer()
         {
-           Console.WriteLine("Liste des pièces de musique disponibles :\n");
-            for(int i = 0; i < Musicien.Pieces.Count; i++)
-                Console.WriteLine("(" + (i+1) + ")"+ Musicien.Pieces[i]);
+            int choix;
+            do
+            {
+                Console.WriteLine("Liste des pièces de musique disponibles :\n");
+                for (int i = 0; i < Musicien.Pieces.Count; i++)
+                    Console.WriteLine("(" + (i + 1) + ")" + Musicien.Pieces[i]);
 
-            Console.WriteLine("Entrer le chiffre correspondant à votre choix");
- 
-            int choix = Console.ReadKey().KeyChar;
+                Console.WriteLine("Entrer le chiffre correspondant à votre choix");
+
+                choix = Console.ReadKey().KeyChar;
+            } while (Musicien.Niveau >= Musicien.Pieces[choix].NiveauMinimum);
             if (Musicien.Instrument.Corde.Durabilite <= 0)
                 throw new Exception("La durabilité de la corde a atteint ses limites");
             else
@@ -117,8 +121,25 @@ namespace PratiqueExamen
 
         public void JouerPourUnPublic()
         {
-            Pratiquer();
-                //to do: gagner l'argent
+            int choix;
+            do
+            {
+                Console.WriteLine("Liste des pièces de musique disponibles :\n");
+                for (int i = 0; i < Musicien.Pieces.Count; i++)
+                    Console.WriteLine("(" + (i + 1) + ")" + Musicien.Pieces[i]);
+
+                Console.WriteLine("Entrer le chiffre correspondant à votre choix");
+
+                choix = Console.ReadKey().KeyChar;
+            } while (Musicien.Niveau >= Musicien.Pieces[choix].NiveauMinimum);
+            if (Musicien.Instrument.Corde.Durabilite <= 0)
+                throw new Exception("La durabilité de la corde a atteint ses limites");
+            else
+            {
+                Musicien.Experience += Musicien.Pieces[choix - 1].QuantiteExperience;
+                Musicien.Instrument.BaisserDurabilite();
+            }
+            Musicien.Montant += Musicien.Pieces[choix - 1].Prix;
         }
 
         public override string ToString()
